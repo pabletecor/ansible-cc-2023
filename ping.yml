@@ -1,0 +1,6 @@
+---
+
+- hosts: all
+  tasks:
+  - name: Ping a los otros equipos
+    action: ping
