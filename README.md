@@ -25,12 +25,38 @@ En el editor de cloud shell creamos el archivo inventory.ini
 
 Que contendrá las IPs publicas de nuestras máquinas
 
-# 4. CREAR UN PLAYBOOK PARA HACER PING A AMBAS MÁQUINAS
+# 4. Crear un playbook para hacer ping a ambas máquinas
 
 Creo un playbook llamado ping.yml con el siguiente código:
 
+```
+---
 
+- hosts: all
+  tasks:
+  - name: Ping a los otros equipos
+    action: ping
+```
 
+Para que el ping funcione, primero generamos una clave ssh con el comando
+
+`ssh-keygen -t rsa`
+
+En la carpeta oculta .ssh, se habrá generado la clave, abrimos el archivo id_rsa.pub y copiamos la clave generada.
+
+La clave la copiamos en los ajustes de metadatos de google cloud compute engine, que las extiende a todas las instancias.
+
+Para hacer ping usamos el comando
+
+`ansible-playbook -i inventory.ini ping.yml`
+
+Y podemos ver que funciona correctamente.
+
+# 5. Crear un playbook para instalar apache y PHP en webserver y mysql en database
+
+Modificamos el fichero inventory.ini y creamos el playbook playbook_instalador.yml, que se encuentran en el repositorio.
+
+Para ejecutarlo simplemente usamos el comando `ansible-playbook -i inventory.ini playbook_instalador.yml`
 
 
 
